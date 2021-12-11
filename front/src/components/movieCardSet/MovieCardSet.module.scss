@@ -1,0 +1,9 @@
+.MovieCardSet {
+  display: grid;
+  gap: 15px;
+  margin: 0.15rem;
+  grid-template-columns: repeat(auto-fit,minmax(200px,0.5fr));
+  //display: flex;
+  //flex-wrap: wrap;
+  //justify-content: center;
+}
