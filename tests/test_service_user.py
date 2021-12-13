@@ -51,7 +51,7 @@ def user_dao():
     return user_dao
 
 
-class TestUserService():
+class TestUserService:
     @pytest.fixture(autouse=True)
     def user_service(self,user_dao):
         self.user_service = UserService(user_dao)

@@ -3,7 +3,6 @@ from unittest.mock import MagicMock, patch
 
 from flask import jsonify
 
-
 from dao.model.director import Directors
 from dao.model.genre import Genres
 from dao.model.movies import Movies
@@ -14,62 +13,68 @@ from service.movies import MovieService
 from service.user import UserService
 
 
-@pytest.fixture()
-def movies_dao():
-    m1 = Movies(title="Омерзительная восьмерка",
-                id=1,
-                year=2015,
-                trailer="https=//www.youtube.com/watch?v=lmB9VWm0okU",
-                description="США после Гражданской войны. Легендарный охотник за головами Джон Рут по кличке Вешатель конвоирует заключенную. По пути к ним прибиваются еще несколько путешественников. Снежная буря вынуждает компанию искать укрытие в лавке на отшибе, где уже расположилось весьма пестрое общество= генерал конфедератов, мексиканец, ковбой… И один из них - не тот, за кого себя выдает.",
-                rating=7.8)
-    m2 = Movies(title="Дюна",
-                id=2,
-                year=2015,
-                trailer="https=//www.youtube.com/watch?v=lmB9VWm0okU",
-                description="Это история любви старлетки, которая между прослушиваниями подает кофе состоявшимся кинозвездам, и фанатичного джазового музыканта, вынужденного подрабатывать в заштатных барах. Но пришедший к влюбленным успех начинает подтачивать их отношения.",
-                rating=8.8)
+class TestMoviesService:
+    @pytest.fixture
+    def mov_1(self):
+        return Movies(title="Омерзительная восьмерка",
+                      id=1,
+                      year=2015,
+                      trailer="https=//www.youtube.com/watch?v=lmB9VWm0okU",
+                      description="США после Гражданской войны. Легендарный охотник за головами Джон Рут по кличке Вешатель конвоирует заключенную. По пути к ним прибиваются еще несколько путешественников. Снежная буря вынуждает компанию искать укрытие в лавке на отшибе, где уже расположилось весьма пестрое общество= генерал конфедератов, мексиканец, ковбой… И один из них - не тот, за кого себя выдает.",
+                      rating=7.8)
 
-    with patch('dao.movies.MovieDAO') as mock:
-        mock = MagicMock(
-            get_one_movie=MagicMock(return_value=m1),
-            get_all_movies=MagicMock(),
-            create_movie=MagicMock(),
-            delete_movie=MagicMock(),
-            update_movie=MagicMock(),
-        )
-        return mock
-    # movies_dao = MovieDAO(None)
-    # u1 = User(id=1,
-    #            name="test",
-    #            surname="ee",
-    #            email="t@mail.ru",
-    #            password="00000000")
-    # u2 = User(id=2,
-    #            name="test2",
-    #            surname="ee2",
-    #            email="t2@mail.ru",
-    #            password="00000029")
-    #
+    @pytest.fixture
+    def mov_2(self):
+        return Movies(title="Дюна",
+                      id=2,
+                      year=2015,
+                      trailer="https=//www.youtube.com/watch?v=lmB9VWm0okU",
+                      description="Это история любви старлетки, которая между прослушиваниями подает кофе состоявшимся кинозвездам, и фанатичного джазового музыканта, вынужденного подрабатывать в заштатных барах. Но пришедший к влюбленным успех начинает подтачивать их отношения.",
+                      rating=8.8)
 
-    #
-    # movies_dao.get_one_movie = MagicMock(return_value=m1)
-    # movies_dao.get_all_movies = MagicMock(return_value=[m1, m2])
-    # movies_dao.update_movie = MagicMock(return_value=m1)
-    # movies_dao.create_movie = MagicMock(return_value=Movies(id=1))
-    # movies_dao.delete_movie = MagicMock()
-    # return movies_dao
+    @pytest.fixture
+    def mov_dao(self, mov_1, mov_2):
+        # m1 = Movies(title="Омерзительная восьмерка",
+        #             id=1,
+        #             year=2015,
+        #             trailer="https=//www.youtube.com/watch?v=lmB9VWm0okU",
+        #             description="США после Гражданской войны. Легендарный охотник за головами Джон Рут по кличке Вешатель конвоирует заключенную. По пути к ним прибиваются еще несколько путешественников. Снежная буря вынуждает компанию искать укрытие в лавке на отшибе, где уже расположилось весьма пестрое общество= генерал конфедератов, мексиканец, ковбой… И один из них - не тот, за кого себя выдает.",
+        #             rating=7.8)
+        # m2 = Movies(title="Дюна",
+        #             id=2,
+        #             year=2015,
+        #             trailer="https=//www.youtube.com/watch?v=lmB9VWm0okU",
+        #             description="Это история любви старлетки, которая между прослушиваниями подает кофе состоявшимся кинозвездам, и фанатичного джазового музыканта, вынужденного подрабатывать в заштатных барах. Но пришедший к влюбленным успех начинает подтачивать их отношения.",
+        #             rating=8.8)
 
+        # with patch('dao.movies.MovieDAO') as mock:
+        #     mock = MagicMock(
+        #         get_one_movie=MagicMock(return_value=m1),
+        #         get_all_movies=MagicMock(),
+        #         create_movie=MagicMock(),
+        #         delete_movie=MagicMock(),
+        #         update_movie=MagicMock(),
+        #     )
+        #     return mock
+        dao = MovieDAO(None)
 
-class TestMoviesService():
+        dao.get_one_movie = MagicMock(return_value=mov_1)
+        dao.get_all_movies = MagicMock(return_value=[mov_1, mov_2])
+        dao.update_movie = MagicMock(return_value=mov_1)
+        dao.create_movie = MagicMock(return_value=Movies(id=1))
+        dao.delete_movie = MagicMock()
+        return dao
+
     @pytest.fixture(autouse=True)
-    def movies_service(self,movies_dao):
-        self.movie_service = MovieService(movies_dao)
+    def movies_service(self, mov_dao):
+        self.movie_service = MovieService(mov_dao)
 
-    # def test_get_one(self):
-    #     movie_one = self.movie_service.get_one_movie(1)
-    #     assert movie_one is not None
-    #     assert movie_one.year == 2015
-    #     assert movie_one.title == 'Омерзительная восьмерка'
+    def test_get_one(self,mov_1):
+        assert mov_1 == self.movie_service.get_one_movie(1)
+        # movie_one = self.movie_service.get_one_movie(1)
+        # assert movie_one is not None
+        # assert movie_one.year == 2015
+        # assert movie_one.title == 'Омерзительная восьмерка'
 
     # def test_bad_get_one(self,movie_dao):
     #     movie_dao.get_one_movie.return_value=None
@@ -120,6 +125,3 @@ class TestMoviesService():
 
     # def test_bad_delete_request(self):
     #     self.movie_service.delete_movie(None)
-
-
-
