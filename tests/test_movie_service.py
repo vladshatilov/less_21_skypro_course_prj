@@ -58,11 +58,11 @@ class TestMoviesService:
         #     return mock
         dao = MovieDAO(None)
 
-        dao.get_one_movie = MagicMock(return_value=mov_1)
-        dao.get_all_movies = MagicMock(return_value=[mov_1, mov_2])
-        dao.update_movie = MagicMock(return_value=mov_1)
-        dao.create_movie = MagicMock(return_value=Movies(id=1))
-        dao.delete_movie = MagicMock()
+        dao.get_one = MagicMock(return_value=mov_1)
+        dao.get_all = MagicMock(return_value=[mov_1, mov_2])
+        dao.update = MagicMock(return_value=mov_1)
+        dao.create = MagicMock(return_value=Movies(id=1))
+        dao.delete = MagicMock()
         return dao
 
     @pytest.fixture(autouse=True)
@@ -70,58 +70,58 @@ class TestMoviesService:
         self.movie_service = MovieService(mov_dao)
 
     def test_get_one(self,mov_1):
-        assert mov_1 == self.movie_service.get_one_movie(1)
-        # movie_one = self.movie_service.get_one_movie(1)
-        # assert movie_one is not None
-        # assert movie_one.year == 2015
-        # assert movie_one.title == 'Омерзительная восьмерка'
+        # assert mov_1 == self.movie_service.get_one_movie(1)
+        movie_one = self.movie_service.get_one_movie(1)
+        assert movie_one is not None
+        assert movie_one.year == 2015
+        assert movie_one.title == 'Омерзительная восьмерка'
 
-    # def test_bad_get_one(self,movie_dao):
-    #     movie_dao.get_one_movie.return_value=None
-    #     movie_one = self.movie_service.get_one_movie(None)
-    #     assert movie_one is None
+    def test_bad_get_one(self,mov_dao):
+        mov_dao.get_one.return_value=None
+        movie_one = self.movie_service.get_one_movie(None)
+        assert movie_one is None
 
-    # def test_get_all(self):
-    #     movies = self.movie_service.get_all_movies()
-    #     assert len(movies) == 3
-    #
-    # def test_create(self):
-    #     movie_one = {
-    #         "title": "Чикаго",
-    #         "id": 7,
-    #         "year": 2002,
-    #         "trailer": "https://www.youtube.com/watch?v=YxzS_LzWdG8",
-    #         "description": "Рокси Харт мечтает о песнях и танцах и о том, как сравняться с самой Велмой Келли, примадонной водевиля. И Рокси действительно оказывается с Велмой в одном положении, когда несколько очень неправильных шагов приводят обеих на скамью подсудимых.",
-    #         "rating": 7.2
-    #     }
-    #     user = self.movie_service.create_movie(movie_one)
-    #     assert movie_one['id'] is not None
-    #     assert movie_one['rating'] == 7.2
-    #
-    # def test_update(self):
-    #     movie_one = {
-    #         "title": "Чикаго",
-    #         "id": 1,
-    #         "year": 2002,
-    #         "trailer": "https://www.youtube.com/watch?v=YxzS_LzWdG8",
-    #         "description": "Рокси Харт мечтает о песнях и танцах и о том, как сравняться с самой Велмой Келли, примадонной водевиля. И Рокси действительно оказывается с Велмой в одном положении, когда несколько очень неправильных шагов приводят обеих на скамью подсудимых.",
-    #         "rating": 7.2
-    #     }
-    #     self.movie_service.update_movie(movie_one)
-    #
-    # def test_partially_update(self):
-    #     movie_one = {
-    #         "title": "Чикаго",
-    #         "id": 1,
-    #         "year": 2002,
-    #         "trailer": "https://www.youtube.com/watch?v=YxzS_LzWdG8",
-    #         "description": "Рокси Харт мечтает о песнях и танцах и о том, как сравняться с самой Велмой Келли, примадонной водевиля. И Рокси действительно оказывается с Велмой в одном положении, когда несколько очень неправильных шагов приводят обеих на скамью подсудимых.",
-    #         "rating": 7.2
-    #     }
-    #     self.movie_service.update_movie(movie_one)
+    def test_get_all(self):
+        movies = self.movie_service.get_all_movies()
+        assert len(movies) == 2
 
-    # def test_delete(self):
-    #     self.movie_service.delete_movie(1)
+    def test_create(self):
+        movie_one = {
+            "title": "Чикаго",
+            "id": 7,
+            "year": 2002,
+            "trailer": "https://www.youtube.com/watch?v=YxzS_LzWdG8",
+            "description": "Рокси Харт мечтает о песнях и танцах и о том, как сравняться с самой Велмой Келли, примадонной водевиля. И Рокси действительно оказывается с Велмой в одном положении, когда несколько очень неправильных шагов приводят обеих на скамью подсудимых.",
+            "rating": 7.2
+        }
+        user = self.movie_service.create_movie(movie_one)
+        assert movie_one['id'] is not None
+        assert movie_one['rating'] == 7.2
 
-    # def test_bad_delete_request(self):
-    #     self.movie_service.delete_movie(None)
+    def test_update(self):
+        movie_one = {
+            "title": "Чикаго",
+            "id": 1,
+            "year": 2002,
+            "trailer": "https://www.youtube.com/watch?v=YxzS_LzWdG8",
+            "description": "Рокси Харт мечтает о песнях и танцах и о том, как сравняться с самой Велмой Келли, примадонной водевиля. И Рокси действительно оказывается с Велмой в одном положении, когда несколько очень неправильных шагов приводят обеих на скамью подсудимых.",
+            "rating": 7.2
+        }
+        self.movie_service.update_movie(1, movie_one)
+
+    def test_partially_update(self):
+        movie_one = {
+            "title": "Чикаго",
+            "id": 1,
+            "year": 2002,
+            "trailer": "https://www.youtube.com/watch?v=YxzS_LzWdG8",
+            "description": "Рокси Харт мечтает о песнях и танцах и о том, как сравняться с самой Велмой Келли, примадонной водевиля. И Рокси действительно оказывается с Велмой в одном положении, когда несколько очень неправильных шагов приводят обеих на скамью подсудимых.",
+            "rating": 7.2
+        }
+        self.movie_service.update_movie(1,movie_one)
+
+    def test_delete(self):
+        self.movie_service.delete_movie(1)
+
+    def test_bad_delete_request(self):
+        self.movie_service.delete_movie(None)
