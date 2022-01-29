@@ -50,4 +50,4 @@ jobs:
           password: ${{secrets.SSH_PASSWORD}}
           script: |
             cd code
-            echo #{{secrets.SSH_PASSWORD}} | sudo -S docker-compose up -d
+            echo ${{secrets.SSH_PASSWORD}} | sudo -S docker-compose up -d
