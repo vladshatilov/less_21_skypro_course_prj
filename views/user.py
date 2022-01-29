@@ -65,6 +65,10 @@ class User_Favourites(Resource):
 
 @user_ns.route('/auth/login')
 class User_Login(Resource):
+    def get(self):
+        users = user_service.get_all()
+        return jsonify(Usefull_scheme(many=True).dump(users))
+
     def post(self):
         request_json = request.json
         tokens = user_service.get_access_token(request_json)

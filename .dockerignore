@@ -1,0 +1,7 @@
+Dockerfile
+.idea
+node_modules
+venv
+Dockerfile3
+front
+.pytest_cache

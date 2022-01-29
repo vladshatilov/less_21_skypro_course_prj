@@ -1,0 +1,134 @@
+#Register new user
+###
+POST http://127.0.0.1/auth/register
+Accept: application/json
+Content-Type: application/json
+
+{
+"name": "vlad",
+"email": "test@mail.ru",
+"password": "vlad",
+"surname": "shatilov"
+}
+###
+GET http://127.0.0.1/auth/login
+Accept: application/json
+Content-Type: application/json
+
+###
+#one more
+###
+POST http://127.0.0.1/auth/register
+Accept: application/json
+Content-Type: application/json
+
+{
+"name": "ann",
+"email": "ann@mail.ru",
+"password": "ann",
+"surname": "ann"
+}
+###
+
+#Get user about
+###
+GET http://127.0.0.1/user
+Accept: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidmxhZCIsImVtYWlsIjoidGVzdEBtYWlsLnJ1Iiwicm9sZSI6InVzZXIiLCJleHAiOjE2Mzg5NzUyOTh9.k11Ta8HKBj2mLxrj9CDPuLEF_bIJwA5A6IPDYVxGbwo
+#Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiYW5uIiwiZW1haWwiOiJhbm5AbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNjM4OTc1OTMzfQ.Dg9AH3Y-eGwZPBsU27NwbRDzeHs9da6fV4Ysvr_p2f4
+
+###
+#Patch user about
+###
+PATCH http://127.0.0.1/user
+Accept: application/json
+#Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidmxhZCIsImVtYWlsIjoidGVzdEBtYWlsLnJ1Iiwicm9sZSI6InVzZXIiLCJleHAiOjE2Mzg5NzUyOTh9.k11Ta8HKBj2mLxrj9CDPuLEF_bIJwA5A6IPDYVxGbwo
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiYW5uIiwiZW1haWwiOiJhbm5AbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNjM4OTc1OTMzfQ.Dg9AH3Y-eGwZPBsU27NwbRDzeHs9da6fV4Ysvr_p2f4
+Content-Type: application/json
+
+{
+  "name": "ann0",
+  "surname": "ann00",
+  "favourite_genre": 6
+}
+
+###
+
+#Update password
+###
+PUT http://127.0.0.1/user/password
+Accept: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidmxhZCIsImVtYWlsIjoidGVzdEBtYWlsLnJ1Iiwicm9sZSI6InVzZXIiLCJleHAiOjE2Mzg5NzUyOTh9.k11Ta8HKBj2mLxrj9CDPuLEF_bIJwA5A6IPDYVxGbwo
+#Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiYW5uIiwiZW1haWwiOiJhbm5AbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNjM4OTc1OTMzfQ.Dg9AH3Y-eGwZPBsU27NwbRDzeHs9da6fV4Ysvr_p2f4
+Content-Type: application/json
+
+{
+  "password": "vlad",
+  "new_password": "vladvlad"
+}
+
+###
+#Add favourite movies
+###
+
+POST http://127.0.0.1/favorites/movies/15
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiYW5uIiwiZW1haWwiOiJhbm5AbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNjM4OTc1OTMzfQ.Dg9AH3Y-eGwZPBsU27NwbRDzeHs9da6fV4Ysvr_p2f4
+
+
+###
+#Remove from favourite movies
+###
+DELETE http://127.0.0.1/favorites/movies/15
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiYW5uIiwiZW1haWwiOiJhbm5AbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNjM4OTc1OTMzfQ.Dg9AH3Y-eGwZPBsU27NwbRDzeHs9da6fV4Ysvr_p2f4
+
+###
+#Get token (Login)
+###
+POST http://127.0.0.1/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{
+"email": "test@mail.ru",
+"password": "vlad"
+}
+
+###
+#Update token
+###
+PUT http://127.0.0.1/auth/login
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidmxhZCIsImVtYWlsIjoidGVzdEBtYWlsLnJ1Iiwicm9sZSI6InVzZXIiLCJleHAiOjE2Mzg5NzUyOTh9.k11Ta8HKBj2mLxrj9CDPuLEF_bIJwA5A6IPDYVxGbwo
+
+{
+"refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidmxhZCIsImVtYWlsIjoidGVzdEBtYWlsLnJ1Iiwicm9sZSI6InVzZXIiLCJleHAiOjE2NTQ1MjU0OTh9.rsYYQHSIYlG3m1eYV3RsFHEGiPWq7yYAQtdO1E20Mek"
+}
+
+###
+###
+###
+###
+###
+
+#Test get movies
+###
+GET http://127.0.0.1/movies
+Accept: application/json
+Content-Type: application/json
+
+###
+GET http://127.0.0.1/directors
+Accept: application/json
+###
+
+GET http://127.0.0.1/users
+Accept: application/json
+Content-Type: application/json
+
+<> 2021-12-07T193452.200.json
+###
