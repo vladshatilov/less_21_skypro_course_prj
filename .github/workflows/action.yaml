@@ -26,6 +26,8 @@ jobs:
       GIT_REF_NAME: $GITHUB_REF_NAME
       GIT_RUN_ID: $GITHUB_RUN_ID
     steps:
+      - name: clone code
+        uses: actions/checkout@v2
       - name: render compose.yaml
         run: |
           mkdir deploy
