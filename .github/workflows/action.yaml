@@ -30,8 +30,8 @@ jobs:
       - name: render compose.yaml
         run: |
           mkdir deploy
-          cat docker-compose-vm.yaml | envsubst>deploy/docker-compose.yaml
-          cat config-vm.py | envsubst>deploy/config.py
+          cat docker-compose-vm.yaml | envsubst > deploy/docker-compose.yaml
+          cat config-vm.py | envsubst > deploy/config.py
       - name: clone files to server
         uses: appleboy/scp-action@master
         with:
