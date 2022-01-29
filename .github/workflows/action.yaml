@@ -11,8 +11,41 @@ jobs:
       - name: show dir after clone
         run: ls -l
       - name: docker build
-        run: docker build -t vladshatilov/flask_app:$GITHUB_REF_NAME_$GITHUB_RUN_ID .
+        run: docker build -t vladshatilov/flask_app:$GITHUB_REF_NAME-$GITHUB_RUN_ID .
       - name: docker login
         run: echo ${{secrets.DOCKER_HUB_TOKEN}} | docker login -u ${{secrets.DOCKER_HUB_USER}} --password-stdin
       - name: docker push
-        run: docker push vladshatilov/flask_app:$GITHUB_REF_NAME_$GITHUB_RUN_ID
+        run: docker push vladshatilov/flask_app:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build_image_of_the_latest_push
+    env:
+      DB_USER:postgres
+      DB_PASS:${{secrets.DB_PASS}}
+      DB_NAME:${{secrets.DB_NAME}}
+      GIT_REF_NAME:$GITHUB_REF_NAME
+      GIT_RUN_ID:$GITHUB_RUN_ID
+    steps:
+      - name: render compose.yaml
+        run: |
+          mkdir deploy
+          cat docker-compose-vm.yaml | envsubst>deploy/docker-compose.yaml
+          cat config-vm.py | envsubst>deploy/config.py
+      - name: clone files to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{secrets.HOST}}
+          username: ${{secrets.SSH_USERNAME}}
+          password: ${{secrets.SSH_PASSWORD}}
+          source: "deploy/docker-compose.yaml,deploy/config.py"
+          target: "code"
+          strip_components: 1
+      - name: run docker compose
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.HOST}}
+          username: ${{secrets.SSH_USERNAME}}
+          password: ${{secrets.SSH_PASSWORD}}
+          script: |
+            cd code
+            echo #{{secrets.SSH_PASSWORD}} | sudo -S docker-compose up -d
