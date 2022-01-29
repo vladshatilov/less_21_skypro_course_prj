@@ -3,6 +3,7 @@ on: [push]
 jobs:
   build_image_of_the_latest_push:
     runs-on: ubuntu-latest
+    en
     steps:
       - name: show dir
         run: ls -l
@@ -20,11 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: build_image_of_the_latest_push
     env:
-      DB_USER:postgres
-      DB_PASS:${{secrets.DB_PASS}}
-      DB_NAME:${{secrets.DB_NAME}}
-      GIT_REF_NAME:$GITHUB_REF_NAME
-      GIT_RUN_ID:$GITHUB_RUN_ID
+      DB_USER: postgres
+      DB_PASS: ${{secrets.DB_PASS}}
+      DB_NAME: ${{secrets.DB_NAME}}
+      GIT_REF_NAME: $GITHUB_REF_NAME
+      GIT_RUN_ID: $GITHUB_RUN_ID
     steps:
       - name: render compose.yaml
         run: |

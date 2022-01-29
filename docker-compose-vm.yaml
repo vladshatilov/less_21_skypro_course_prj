@@ -15,7 +15,7 @@ services:
       POSTGRES_PASSWORD: $DB_PASS
       POSTGRES_DB: $DB_NAME
   back:
-    image: vladshatilov/flask_app:$GIT_REF_NAME-$GIT_RUN_ID
+    image: vladshatilov/flask_app:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     ports:
       - "80:80"
     depends_on:
@@ -24,7 +24,7 @@ services:
     volumes:
       - .\config.py:/code/config.py
   migrations:
-    image: vladshatilov/flask_app:$GIT_REF_NAME-$GIT_RUN_ID
+    image: vladshatilov/flask_app:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     depends_on:
       postgres:
         condition: service_healthy
