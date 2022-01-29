@@ -11,7 +11,7 @@ jobs:
       - name: show dir after clone
         run: ls -l
       - name: docker build
-        run: docker build -t vladshatilov/flask_app:$GITHUB_REF_NAME_$GITHUB_RUN_ID
+        run: docker build -t vladshatilov/flask_app:$GITHUB_REF_NAME_$GITHUB_RUN_ID .
       - name: docker login
         run: echo ${{secrets.DOCKER_HUB_TOKEN}} | docker login -u ${{secrets.DOCKER_HUB_USER}} --password-stdin
       - name: docker push
